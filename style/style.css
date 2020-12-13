@@ -22,7 +22,7 @@ header {
 }
 
 .content_container {
-    margin: 50px 0px 0px 210px;
+    margin: 50px 0px 50px 0px;
     width: 1000px;
     min-height: 300px;
     border: 1px solid black;
@@ -46,4 +46,28 @@ header {
 .content--real--text {
     font-weight: 500;
     text-align: center;
+}
+
+.cards-wrapper {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header--link {
+    color: white;
+    margin: 10px 60px 0px 0px;
+    font-weight: 500;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.5em;
+    text-decoration: none
+}
+
+.link--space {
+    margin: 0px 500px 0px 500px;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
 }
