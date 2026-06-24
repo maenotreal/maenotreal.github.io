@@ -1,0 +1,38 @@
+
+<div id="mmd1" style="padding: 1rem 0"></div>
+<script type="module">
+import mermaid from 'https://esm.sh/mermaid@11/dist/mermaid.esm.min.mjs';
+const dark = matchMedia('(prefers-color-scheme: dark)').matches;
+await document.fonts.ready;
+mermaid.initialize({
+  startOnLoad: false,
+  theme: 'base',
+  fontFamily: '"Anthropic Sans", sans-serif',
+  themeVariables: {
+    darkMode: dark,
+    fontSize: '13px',
+    fontFamily: '"Anthropic Sans", sans-serif',
+    lineColor: dark ? '#9c9a92' : '#73726c',
+    textColor: dark ? '#c2c0b6' : '#3d3d3a',
+    primaryColor: dark ? '#3C3489' : '#EEEDFE',
+    primaryTextColor: dark ? '#CECBF6' : '#26215C',
+    primaryBorderColor: dark ? '#AFA9EC' : '#534AB7',
+    edgeLabelBackground: dark ? '#2C2C2A' : '#F1EFE8',
+  },
+});
+
+const diagram = `flowchart TD
+    T([Триггер: начало месяца]):::amber --> B[Скрипт читает Google Таблицу\\nчерез Sheets / Drive API]:::purple
+    B --> C[Генерация schedule.json\\nграфик дежурств на месяц]:::blue
+    C --> D[Коммит и пуш\\nв Git репозиторий]:::purple
+    D --> E([schedule.json доступен\\nпо HTTP]):::teal
+
+    classDef amber fill:${dark?'#854F0B':'#FAEEDA'},stroke:${dark?'#EF9F27':'#BA7517'},color:${dark?'#FAC775':'#633806'}
+    classDef purple fill:${dark?'#3C3489':'#EEEDFE'},stroke:${dark?'#AFA9EC':'#534AB7'},color:${dark?'#CECBF6':'#26215C'}
+    classDef blue fill:${dark?'#0C447C':'#E6F1FB'},stroke:${dark?'#85B7EB':'#185FA5'},color:${dark?'#B5D4F4':'#0C447C'}
+    classDef teal fill:${dark?'#085041':'#E1F5EE'},stroke:${dark?'#1D9E75':'#0F6E56'},color:${dark?'#5DCAA5':'#04342C'}
+`;
+
+const { svg } = await mermaid.render('flow-svg-export', diagram);
+document.getElementById('mmd1').innerHTML = svg;
+</script>

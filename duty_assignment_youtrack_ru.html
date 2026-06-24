@@ -1,0 +1,41 @@
+
+<div id="mmd2" style="padding: 1rem 0"></div>
+<script type="module">
+import mermaid from 'https://esm.sh/mermaid@11/dist/mermaid.esm.min.mjs';
+const dark = matchMedia('(prefers-color-scheme: dark)').matches;
+await document.fonts.ready;
+mermaid.initialize({
+  startOnLoad: false,
+  theme: 'base',
+  fontFamily: '"Anthropic Sans", sans-serif',
+  themeVariables: {
+    darkMode: dark,
+    fontSize: '13px',
+    fontFamily: '"Anthropic Sans", sans-serif',
+    lineColor: dark ? '#9c9a92' : '#73726c',
+    textColor: dark ? '#c2c0b6' : '#3d3d3a',
+    primaryColor: dark ? '#3C3489' : '#EEEDFE',
+    primaryTextColor: dark ? '#CECBF6' : '#26215C',
+    primaryBorderColor: dark ? '#AFA9EC' : '#534AB7',
+    edgeLabelBackground: dark ? '#2C2C2A' : '#F1EFE8',
+  },
+});
+
+const diagram = `flowchart TD
+    A([Задача создана в YouTrack]):::teal --> B{Триггер:\nсоздание задачи\nили понедельник?}:::amber
+    B -- Создание задачи --> C[Загрузить schedule.json по HTTP]:::purple
+    B -- Понедельник --> C
+    C --> D{Найти дежурного\nна текущую дату}:::amber
+    D -- Найден --> E[Сопоставить GUID\\nс логином YouTrack]:::purple
+    D -- Пробел в графике --> F([Назначение пропущено]):::gray
+    E --> G([Назначить задачу\\nдежурному]):::teal
+
+    classDef teal fill:${dark?'#085041':'#E1F5EE'},stroke:${dark?'#1D9E75':'#0F6E56'},color:${dark?'#5DCAA5':'#04342C'}
+    classDef amber fill:${dark?'#854F0B':'#FAEEDA'},stroke:${dark?'#EF9F27':'#BA7517'},color:${dark?'#FAC775':'#633806'}
+    classDef purple fill:${dark?'#3C3489':'#EEEDFE'},stroke:${dark?'#AFA9EC':'#534AB7'},color:${dark?'#CECBF6':'#26215C'}
+    classDef gray fill:${dark?'#444441':'#F1EFE8'},stroke:${dark?'#B4B2A9':'#5F5E5A'},color:${dark?'#D3D1C7':'#444441'}
+`;
+
+const { svg } = await mermaid.render('flow-svg-assign', diagram);
+document.getElementById('mmd2').innerHTML = svg;
+</script>
